@@ -1,15 +1,17 @@
-const dotenv = require('dotenv');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const dotenv = require('dotenv');
 const logger = require('morgan');
-const indexRoute = require('./routes/index')
+const indexRoute = require('./routes/index');
+const userRoute = require('./routes/user');
+const adminRoute = require('./routes/admin');
 
 
 // configurations
 dotenv.config();
-const host = process.env.SERVER_HOST
-const port = process.env.SERVER_PORT
+const host = process.env.SERVER_HOST;
+const port = process.env.SERVER_PORT;
 const app = express();
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(logger('dev'));
@@ -18,6 +20,8 @@ app.use('/public', express.static(path.join(__dirname, '/public')));
 
 // Routes
 app.use('/', indexRoute);
+app.use('/user', userRoute);
+app.use('/admin', adminRoute);
 
 
 // Server Set-up
